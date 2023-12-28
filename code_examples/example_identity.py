@@ -1,4 +1,4 @@
-from category import Category
+from src.core.category.domain.category import Category
 
 
 category_1 = Category(name="Filme", description="Filmes em geral")
