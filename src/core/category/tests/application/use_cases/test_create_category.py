@@ -2,7 +2,7 @@ from uuid import UUID
 from unittest.mock import MagicMock
 
 import pytest
-from src.core.category.application.use_cases.create_category import create_category
+from src.core.category.application.use_cases.create_category import InMemoryCategoryRepository, create_category
 from src.core.category.application.use_cases.exceptions import InvalidCategory
 
 
@@ -21,3 +21,10 @@ class TestCreateCategory:
 
         assert exc_info.type == InvalidCategory
         assert str(exc_info.value) == "name cannot be empty"
+
+    def test_persist_category(self):
+        repository = MagicMock(InMemoryCategoryRepository)
+
+        create_category("Movies", "Movie category", repository=repository)
+
+        repository.save.assert_called_once()
