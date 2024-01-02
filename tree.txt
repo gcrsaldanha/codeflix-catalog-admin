@@ -1,0 +1,27 @@
+src
+└── core
+    └── category
+        ├── application
+        │   ├── category_repository.py
+        │   └── use_cases
+        │       ├── create_category.py
+        │       └── exceptions.py
+        ├── domain
+        │   └── category.py
+        ├── infra
+        │   └── in_memory_category_repository.py
+        └── tests
+            ├── application
+            │   └── use_cases
+            │       ├── integration
+            │       │   ├── __init__.py
+            │       │   └── test_create_category.py
+            │       └── unit
+            │           ├── __init__.py
+            │           └── test_create_category.py
+            ├── domain
+            │   └── test_category.py
+            └── infra
+                └── test_in_memory_category_repository.py
+
+14 directories, 11 files
