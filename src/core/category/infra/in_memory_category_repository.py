@@ -19,3 +19,6 @@ class InMemoryCategoryRepository(CategoryRepository):
         category = self.get_by_id(id)
         if category:
             self.categories.remove(category)
+
+    def list(self) -> list[Category]:
+        return [category for category in self.categories]
