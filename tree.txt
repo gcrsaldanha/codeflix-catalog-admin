@@ -1,27 +1,45 @@
-src
-└── core
-    └── category
-        ├── application
-        │   ├── category_repository.py
-        │   └── use_cases
-        │       ├── create_category.py
-        │       └── exceptions.py
-        ├── domain
-        │   └── category.py
-        ├── infra
-        │   └── in_memory_category_repository.py
-        └── tests
-            ├── application
-            │   └── use_cases
-            │       ├── integration
-            │       │   ├── __init__.py
-            │       │   └── test_create_category.py
-            │       └── unit
-            │           ├── __init__.py
-            │           └── test_create_category.py
-            ├── domain
-            │   └── test_category.py
-            └── infra
-                └── test_in_memory_category_repository.py
+src/
+├── core
+│   └── category
+│       ├── application
+│       │   ├── category_repository.py
+│       │   └── use_cases
+│       │       ├── create_category.py
+│       │       ├── delete_category.py
+│       │       ├── exceptions.py
+│       │       ├── get_category.py
+│       │       ├── list_category.py
+│       │       └── update_category.py
+│       ├── domain
+│       │   └── category.py
+│       ├── infra
+│       │   └── in_memory_category_repository.py
+│       └── tests
+│           ├── application
+│           │   └── use_cases
+│           │       ├── integration
+│           │       │   ├── __init__.py
+│           │       │   ├── test_create_category.py
+│           │       │   ├── test_delete_category.py
+│           │       │   ├── test_get_category.py
+│           │       │   ├── test_list_category.py
+│           │       │   └── test_update_category.py
+│           │       └── unit
+│           │           ├── __init__.py
+│           │           ├── test_create_category.py
+│           │           ├── test_delete_category.py
+│           │           ├── test_get_category.py
+│           │           ├── test_list_category.py
+│           │           └── test_update_category.py
+│           ├── domain
+│           │   └── test_category.py
+│           └── infra
+│               └── test_in_memory_category_repository.py
+└── django_project
+    ├── __init__.py
+    ├── asgi.py
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
 
-14 directories, 11 files
+15 directories, 28 files
