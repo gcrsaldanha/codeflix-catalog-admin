@@ -17,7 +17,7 @@ class CategoryViewSet(viewsets.ViewSet):
             {
                 "id": "6f7c2133-f1d3-4040-b700-c547453345d3",
                 "name": "Documentary",
-                "description": "Documenatry description",
+                "description": "Documentary description",
                 "is_active": True
             }
         ])
