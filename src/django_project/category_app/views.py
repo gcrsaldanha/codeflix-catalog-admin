@@ -9,6 +9,7 @@ from src.core.category.application.use_cases.exceptions import CategoryNotFound
 from src.core.category.application.use_cases.list_category import (
     ListCategory,
     ListCategoryRequest,
+    ListCategoryResponse,
 )
 from core.category.application.use_cases.get_category import (
     GetCategory,
@@ -16,37 +17,26 @@ from core.category.application.use_cases.get_category import (
     GetCategoryResponse,
 )
 from django_project.category_app.repository import DjangoORMCategoryRepository
+from src.django_project.category_app.serializers import ListCategoryResponseSerializer, RetrieveCategoryRequestSerializer, RetrieveCategoryResponseSerializer
 
 
 class CategoryViewSet(viewsets.ViewSet):
     def list(self, request: Request) -> Response:
         use_case = ListCategory(repository=DjangoORMCategoryRepository())
-        response = use_case.execute(request=ListCategoryRequest())
-
-        categories = [
-            {
-                "id": str(category.id),
-                "name": category.name,
-                "description": category.description,
-                "is_active": category.is_active,
-            }
-            for category in response.data
-        ]
+        response: ListCategoryResponse = use_case.execute(request=ListCategoryRequest())
+        response_serializer = ListCategoryResponseSerializer(response)
 
         return Response(
             status=HTTP_200_OK,
-            data=categories,
+            data=response_serializer.data,
         )
 
     def retrieve(self, request: Request, pk: UUID) -> Response:
-        try:
-            pk = UUID(pk)
-        except ValueError:
-            return Response(
-                status=HTTP_400_BAD_REQUEST, data={"id": ["Enter a valid UUID."]}
-            )
+        request_data = RetrieveCategoryRequestSerializer(data={"id": pk})
+        request_data.is_valid(raise_exception=True)
 
-        request = GetCategoryRequest(id=pk)
+        # request = GetCategoryRequest(id=request_data.validated_data["id"])
+        request = GetCategoryRequest(**request_data.validated_data)
         use_case = GetCategory(repository=DjangoORMCategoryRepository())
 
         try:
@@ -54,12 +44,8 @@ class CategoryViewSet(viewsets.ViewSet):
         except CategoryNotFound:
             return Response(status=HTTP_404_NOT_FOUND)
 
+        response_serializer = RetrieveCategoryResponseSerializer(response)
         return Response(
             status=HTTP_200_OK,
-            data={
-                "id": str(response.id),
-                "name": response.name,
-                "description": response.description,
-                "is_active": response.is_active,
-            },
+            data=response_serializer.data,
         )

@@ -43,23 +43,24 @@ class TestListAPI:
         url = "/api/categories/"
         response = APIClient().get(url)
 
-        expected_data = [
-            {
-                "id": str(category_movie.id),
-                "name": "Movie",
-                "description": "Movie description",
-                "is_active": True,
-            },
-            {
-                "id": str(category_documentary.id),
-                "name": "Documentary",
-                "description": "Documentary description",
-                "is_active": True,
-            },
-        ]
+        expected_data = {
+            "data": [
+                {
+                    "id": str(category_movie.id),
+                    "name": "Movie",
+                    "description": "Movie description",
+                    "is_active": True,
+                },
+                {
+                    "id": str(category_documentary.id),
+                    "name": "Documentary",
+                    "description": "Documentary description",
+                    "is_active": True,
+                },
+            ]
+        }
 
         assert response.status_code == status.HTTP_200_OK
-        assert len(response.data) == 2
         assert response.data == expected_data
 
 
@@ -77,10 +78,12 @@ class TestRetrieveAPI:
 
         assert response.status_code == status.HTTP_200_OK
         assert response.data == {
-            "id": str(category_movie.id),
-            "name": "Movie",
-            "description": "Movie description",
-            "is_active": True,
+            "data": {
+                "id": str(category_movie.id),
+                "name": "Movie",
+                "description": "Movie description",
+                "is_active": True,
+            }
         }
 
     def test_when_category_with_id_does_not_exist_then_return_404(
@@ -96,4 +99,4 @@ class TestRetrieveAPI:
         response = APIClient().get(url)
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.data == {"id": ["Enter a valid UUID."]}
+        assert response.data == {"id": ["Must be a valid UUID."]}
