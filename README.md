@@ -2,11 +2,8 @@
 Administração de Catálogo – Codeflix - Python
 
 
-## Regras Category
-- [x] Nome da categoria deverá ser obrigatório.
-- [x] Nome deverá ter no máximo 255 caracteres.
-- [x] Ao criar uma nova categoria um identificador deve ser gerado no formato (uuid).
-- [x] Ao criar uma categoria os campos id, descrição e isActive não serão obrigatórios.
-- [x] Caso a propriedade isActive não seja informada, deverá receber como default o valor true.
-- [ ] Teste __str__ - Exercício
-- [ ] Teste __repr__ - Exercício
+## Git Branch para cada módulo
+- [Módulo 2: Entidade Category](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-2-category)
+- [Módulo 3: Casos de uso Category](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-3-category-use-cases)
+- [Módulo 4: casos de uso Category - pt 2](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-4-category-use-cases-part-2)
+- [Módulo 5: Implementando nossa API](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-5-django-api)
