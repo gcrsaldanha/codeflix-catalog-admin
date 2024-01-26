@@ -47,5 +47,5 @@ class UpdateCategory:
         except ValueError as error:
             raise InvalidCategory(error)
 
-        self.repository.save(category)
+        self.repository.update(category)
 

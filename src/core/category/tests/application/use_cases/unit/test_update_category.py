@@ -34,7 +34,7 @@ class TestUpdateCategory:
         ))
 
         assert category.name == "Séries"
-        mock_repository.save.assert_called_once_with(category)
+        mock_repository.update.assert_called_once_with(category)
 
     def test_update_category_description(
         self,
@@ -48,7 +48,7 @@ class TestUpdateCategory:
         ))
 
         assert category.description == "Categoria de séries"
-        mock_repository.save.assert_called_once_with(category)
+        mock_repository.update.assert_called_once_with(category)
 
 
     def test_activate_category(
@@ -66,7 +66,7 @@ class TestUpdateCategory:
         ))
 
         assert category.is_active is True
-        mock_repository.save.assert_called_once_with(category)
+        mock_repository.update.assert_called_once_with(category)
 
     def test_deactivate_category(
         self,
@@ -82,7 +82,7 @@ class TestUpdateCategory:
         ))
 
         assert category.is_active is False
-        mock_repository.save.assert_called_once_with(category)
+        mock_repository.update.assert_called_once_with(category)
 
 
     def test_update_category_name_and_description(
@@ -99,7 +99,7 @@ class TestUpdateCategory:
 
         assert category.name == "Séries"
         assert category.description == "Categoria de séries"
-        mock_repository.save.assert_called_once_with(category)
+        mock_repository.update.assert_called_once_with(category)
 
     def test_when_category_not_found_then_raise_exception(self):
         mock_repository = create_autospec(CategoryRepository)
@@ -111,7 +111,7 @@ class TestUpdateCategory:
         with pytest.raises(CategoryNotFound) as exc:
             use_case.execute(request)
 
-        mock_repository.save.assert_not_called()
+        mock_repository.update.assert_not_called()
         assert str(exc.value) == f"Category with {request.id} not found"
 
     def test_when_category_is_updated_to_invalid_state_then_raise_exception(
@@ -128,5 +128,5 @@ class TestUpdateCategory:
         with pytest.raises(InvalidCategory) as exc:
             use_case.execute(request)
 
-        mock_repository.save.assert_not_called()
+        mock_repository.update.assert_not_called()
         assert str(exc.value) == "name cannot be empty"
