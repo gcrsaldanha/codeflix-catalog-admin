@@ -100,3 +100,30 @@ class TestRetrieveAPI:
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert response.data == {"id": ["Must be a valid UUID."]}
+
+
+@pytest.mark.django_db
+class TestCreateAPI:
+    def test_when_request_data_is_valid_then_create_category(
+        self,
+    ) -> None:
+        url = reverse("category-list")
+        data = {
+            "name": "Movie",
+            "description": "Movie description",
+        }
+        response = APIClient().post(url, data=data)
+
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.data["id"]
+
+    def test_when_request_data_is_invalid_then_return_400(self) -> None:
+        url = reverse("category-list")
+        data = {
+            "name": "",
+            "description": "Movie description",
+        }
+        response = APIClient().post(url, data=data)
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.data == {"name": ["This field may not be blank."]}

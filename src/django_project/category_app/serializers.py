@@ -18,3 +18,13 @@ class RetrieveCategoryRequestSerializer(serializers.Serializer):
 
 class RetrieveCategoryResponseSerializer(serializers.Serializer):
     data = CategoryResponseSerializer(source="*")
+
+
+class CreateCategoryRequestSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=255)
+    description = serializers.CharField(max_length=255, required=False)
+    is_active = serializers.BooleanField(required=False)
+
+
+class CreateCategoryResponseSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
