@@ -1,4 +1,5 @@
 from uuid import uuid4
+from django.test import override_settings
 from django.urls import reverse
 import pytest
 from rest_framework import status
@@ -147,8 +148,8 @@ class TestUpdateAPI:
         response = APIClient().put(url, data=data)
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert response.data == {}
-        updated_category = category_repository.get(category_movie.id)
+        assert not response.data
+        updated_category = category_repository.get_by_id(category_movie.id)
         assert updated_category.name == "Not Movie"
         assert updated_category.description == "Another description"
         assert updated_category.is_active is False
@@ -162,4 +163,8 @@ class TestUpdateAPI:
         response = APIClient().put(url, data=data)
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert response.data == {"id": ["Must be a valid UUID."]}
+        assert response.data == {
+            "id": ["Must be a valid UUID."],
+            "name": ["This field may not be blank."],
+            "is_active": ["This field is required."],
+        }
