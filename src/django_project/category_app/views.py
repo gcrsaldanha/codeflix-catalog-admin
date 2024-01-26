@@ -5,6 +5,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_200_OK,
+    HTTP_204_NO_CONTENT,
     HTTP_404_NOT_FOUND,
     HTTP_400_BAD_REQUEST,
     HTTP_201_CREATED,
@@ -27,6 +28,7 @@ from src.core.category.application.use_cases.get_category import (
     GetCategory,
     GetCategoryRequest,
 )
+from src.core.category.application.use_cases.update_category import UpdateCategory, UpdateCategoryRequest
 from src.django_project.category_app.repository import DjangoORMCategoryRepository
 from src.django_project.category_app.serializers import (
     CreateCategoryRequestSerializer,
@@ -34,6 +36,7 @@ from src.django_project.category_app.serializers import (
     ListCategoryResponseSerializer,
     RetrieveCategoryRequestSerializer,
     RetrieveCategoryResponseSerializer,
+    UpdateCategoryRequestSerializer,
 )
 
 
@@ -48,7 +51,7 @@ class CategoryViewSet(viewsets.ViewSet):
             data=response_serializer.data,
         )
 
-    def retrieve(self, request: Request, pk: UUID) -> Response:
+    def retrieve(self, request: Request, pk: UUID = None) -> Response:
         request_data = RetrieveCategoryRequestSerializer(data={"id": pk})
         request_data.is_valid(raise_exception=True)
 
@@ -79,3 +82,22 @@ class CategoryViewSet(viewsets.ViewSet):
             status=HTTP_201_CREATED,
             data=CreateCategoryResponseSerializer(output).data,
         )
+
+    def update(self, request: Request, pk: UUID = None):
+        serializer = UpdateCategoryRequestSerializer(data={
+            **request.data.dict(),
+            "id": pk,
+        })
+        serializer.is_valid(raise_exception=True)
+
+        input = UpdateCategoryRequest(**serializer.validated_data)
+        use_case = UpdateCategory(repository=DjangoORMCategoryRepository())
+        use_case.execute(request=input)
+
+        return Response(status=HTTP_204_NO_CONTENT)
+
+    def partial_update(self, request, pk: UUID = None):
+        pass
+
+    def destroy(self, request, pk: UUID = None):
+        pass

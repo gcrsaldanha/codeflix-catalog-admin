@@ -28,3 +28,10 @@ class CreateCategoryRequestSerializer(serializers.Serializer):
 
 class CreateCategoryResponseSerializer(serializers.Serializer):
     id = serializers.UUIDField()
+
+
+class UpdateCategoryRequestSerializer(serializers.Serializer):
+    id = serializers.UUIDField(required=True)
+    name = serializers.CharField(required=True)
+    description = serializers.CharField(required=True, allow_blank=True, allow_null=False)
+    is_active = serializers.BooleanField(required=True)

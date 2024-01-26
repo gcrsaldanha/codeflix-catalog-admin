@@ -127,3 +127,39 @@ class TestCreateAPI:
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert response.data == {"name": ["This field may not be blank."]}
+
+
+@pytest.mark.django_db
+class TestUpdateAPI:
+    def test_when_request_data_is_valid_then_update_category(
+        self,
+        category_movie: Category,
+        category_repository: DjangoORMCategoryRepository,
+    ) -> None:
+        category_repository.save(category_movie)
+
+        url = reverse("category-detail", kwargs={"pk": category_movie.id})
+        data = {
+            "name": "Not Movie",
+            "description": "Another description",
+            "is_active": False,
+        }
+        response = APIClient().put(url, data=data)
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert response.data == {}
+        updated_category = category_repository.get(category_movie.id)
+        assert updated_category.name == "Not Movie"
+        assert updated_category.description == "Another description"
+        assert updated_category.is_active is False
+
+    def test_when_request_data_is_invalid_then_return_400(self) -> None:
+        url = reverse("category-detail", kwargs={"pk": "invalid-uuid"})
+        data = {
+            "name": "",
+            "description": "Movie description",
+        }
+        response = APIClient().put(url, data=data)
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.data == {"id": ["Must be a valid UUID."]}
