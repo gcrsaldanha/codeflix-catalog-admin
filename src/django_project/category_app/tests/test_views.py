@@ -1,4 +1,4 @@
-from uuid import uuid4
+from uuid import UUID, uuid4
 from django.test import override_settings
 from django.urls import reverse
 import pytest
@@ -107,6 +107,7 @@ class TestRetrieveAPI:
 class TestCreateAPI:
     def test_when_request_data_is_valid_then_create_category(
         self,
+        category_repository: DjangoORMCategoryRepository,
     ) -> None:
         url = reverse("category-list")
         data = {
@@ -117,6 +118,14 @@ class TestCreateAPI:
 
         assert response.status_code == status.HTTP_201_CREATED
         assert response.data["id"]
+
+        saved_category = category_repository.get_by_id(response.data["id"])
+        assert saved_category == Category(
+            id=UUID(response.data["id"]),
+            name="Movie",
+            description="Movie description",
+            is_active=True,
+        )
 
     def test_when_request_data_is_invalid_then_return_400(self) -> None:
         url = reverse("category-list")

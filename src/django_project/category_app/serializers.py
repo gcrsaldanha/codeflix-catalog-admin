@@ -22,7 +22,7 @@ class RetrieveCategoryResponseSerializer(serializers.Serializer):
 
 class CreateCategoryRequestSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=255)
-    description = serializers.CharField(max_length=255, required=False)
+    description = serializers.CharField(max_length=255, required=False, allow_blank=True, allow_null=False)
     is_active = serializers.BooleanField(required=False)
 
 

@@ -74,7 +74,7 @@ class CategoryViewSet(viewsets.ViewSet):
         )
 
     def create(self, request: Request) -> Response:
-        serializer = CreateCategoryRequestSerializer(data=request.data)
+        serializer = CreateCategoryRequestSerializer(data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
 
         input = CreateCategoryRequest(**serializer.validated_data)
@@ -105,7 +105,7 @@ class CategoryViewSet(viewsets.ViewSet):
     def partial_update(self, request, pk: UUID = None):
         pass
 
-    def destroy(self, request, pk: UUID = None):
+    def destroy(self, request: Request, pk: UUID = None):
         request_data = DeleteCategoryRequestSerializer(data={"id": pk})
         request_data.is_valid(raise_exception=True)
 
