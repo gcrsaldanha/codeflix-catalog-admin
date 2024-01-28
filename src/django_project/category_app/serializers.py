@@ -35,3 +35,7 @@ class UpdateCategoryRequestSerializer(serializers.Serializer):
     name = serializers.CharField(required=True)
     description = serializers.CharField(required=True, allow_blank=True, allow_null=False)
     is_active = serializers.BooleanField(required=True)
+
+
+class DeleteCategoryRequestSerializer(serializers.Serializer):
+    id = serializers.UUIDField()

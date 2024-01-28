@@ -10,10 +10,12 @@ from rest_framework.status import (
     HTTP_400_BAD_REQUEST,
     HTTP_201_CREATED,
 )
+from rest_framework.fields import UUIDField
 from src.core.category.application.use_cases.create_category import (
     CreateCategory,
     CreateCategoryRequest,
 )
+from src.core.category.application.use_cases.delete_category import DeleteCategory, DeleteCategoryRequest
 from src.core.category.application.use_cases.exceptions import (
     CategoryNotFound,
     InvalidCategory,
@@ -33,6 +35,7 @@ from src.django_project.category_app.repository import DjangoORMCategoryReposito
 from src.django_project.category_app.serializers import (
     CreateCategoryRequestSerializer,
     CreateCategoryResponseSerializer,
+    DeleteCategoryRequestSerializer,
     ListCategoryResponseSerializer,
     RetrieveCategoryRequestSerializer,
     RetrieveCategoryResponseSerializer,
@@ -103,4 +106,14 @@ class CategoryViewSet(viewsets.ViewSet):
         pass
 
     def destroy(self, request, pk: UUID = None):
-        pass
+        request_data = DeleteCategoryRequestSerializer(data={"id": pk})
+        request_data.is_valid(raise_exception=True)
+
+        input = DeleteCategoryRequest(**request_data.validated_data)
+        use_case = DeleteCategory(repository=DjangoORMCategoryRepository())
+        try:
+            use_case.execute(input)
+        except CategoryNotFound:
+            return Response(status=HTTP_404_NOT_FOUND)
+
+        return Response(status=HTTP_204_NO_CONTENT)

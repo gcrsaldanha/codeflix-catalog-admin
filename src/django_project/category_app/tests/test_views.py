@@ -181,3 +181,33 @@ class TestUpdateAPI:
         response = APIClient().put(url, data=data)
 
         assert response.status_code == status.HTTP_404_NOT_FOUND
+
+
+@pytest.mark.django_db
+class TestDeleteAPI:
+    def test_when_category_pk_is_invalid_then_return_400(self) -> None:
+        url = reverse("category-detail", kwargs={"pk": "invalid-uuid"})
+        response = APIClient().delete(url)
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.data == {"id": ["Must be a valid UUID."]}
+
+    def test_when_category_not_found_then_return_404(self) -> None:
+        url = reverse("category-detail", kwargs={"pk": uuid4()})
+        response = APIClient().delete(url)
+
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
+    def test_when_category_found_then_delete_category(
+        self,
+        category_movie: Category,
+        category_repository: DjangoORMCategoryRepository,
+    ) -> None:
+        category_repository.save(category_movie)
+
+        url = reverse("category-detail", kwargs={"pk": category_movie.id})
+        response = APIClient().delete(url)
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert not response.data
+        assert category_repository.get_by_id(category_movie.id) is None
