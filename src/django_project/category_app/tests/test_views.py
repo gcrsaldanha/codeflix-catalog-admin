@@ -168,3 +168,16 @@ class TestUpdateAPI:
             "name": ["This field may not be blank."],
             "is_active": ["This field is required."],
         }
+
+    def test_when_category_with_id_does_not_exist_then_return_404(
+        self,
+    ) -> None:
+        url = reverse("category-detail", kwargs={"pk": uuid4()})
+        data = {
+            "name": "Not Movie",
+            "description": "Another description",
+            "is_active": False,
+        }
+        response = APIClient().put(url, data=data)
+
+        assert response.status_code == status.HTTP_404_NOT_FOUND

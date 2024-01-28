@@ -92,7 +92,10 @@ class CategoryViewSet(viewsets.ViewSet):
 
         input = UpdateCategoryRequest(**serializer.validated_data)
         use_case = UpdateCategory(repository=DjangoORMCategoryRepository())
-        use_case.execute(request=input)
+        try:
+            use_case.execute(request=input)
+        except CategoryNotFound:
+            return Response(status=HTTP_404_NOT_FOUND)
 
         return Response(status=HTTP_204_NO_CONTENT)
 
