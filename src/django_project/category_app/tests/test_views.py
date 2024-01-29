@@ -220,3 +220,88 @@ class TestDeleteAPI:
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert not response.data
         assert category_repository.get_by_id(category_movie.id) is None
+
+
+@pytest.mark.django_db
+class TestPartialUpdateAPI:
+    @pytest.mark.parametrize(
+        "payload,expected_category_dict",
+        [
+            (
+                {
+                    "name": "Not Movie",
+                },
+                {
+                    "name": "Not Movie",
+                    "description": "Movie description",
+                    "is_active": True,
+                },
+            ),
+            (
+                {
+                    "description": "Another description",
+                },
+                {
+                    "name": "Movie",
+                    "description": "Another description",
+                    "is_active": True,
+                },
+            ),
+            (
+                {
+                    "is_active": False,
+                },
+                {
+                    "name": "Movie",
+                    "description": "Movie description",
+                    "is_active": False,
+                },
+            ),
+        ],
+    )
+    def test_when_request_data_is_valid_then_update_category(
+        self,
+        payload: dict,
+        expected_category_dict: dict,
+        category_movie: Category,
+        category_repository: DjangoORMCategoryRepository,
+    ) -> None:
+        category_repository.save(category_movie)
+
+        url = reverse("category-detail", kwargs={"pk": category_movie.id})
+        response = APIClient().patch(url, data=payload)
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert not response.data
+        updated_category = category_repository.get_by_id(category_movie.id)
+
+        assert updated_category.name == expected_category_dict["name"]
+        assert updated_category.description == expected_category_dict["description"]
+        assert updated_category.is_active == expected_category_dict["is_active"]
+
+    def test_when_request_data_is_invalid_then_return_400(self) -> None:
+        url = reverse("category-detail", kwargs={"pk": "invalid-uuid"})
+        data = {
+            "name": "",
+            "description": "Movie description",
+        }
+        response = APIClient().patch(url, data=data)
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.data == {
+            "id": ["Must be a valid UUID."],
+            "name": ["This field may not be blank."],
+        }
+
+    def test_when_category_with_id_does_not_exist_then_return_404(
+        self,
+    ) -> None:
+        url = reverse("category-detail", kwargs={"pk": uuid4()})
+        data = {
+            "name": "Not Movie",
+            "description": "Another description",
+            "is_active": False,
+        }
+        response = APIClient().patch(url, data=data)
+
+        assert response.status_code == status.HTTP_404_NOT_FOUND
