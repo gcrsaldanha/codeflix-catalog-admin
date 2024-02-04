@@ -48,18 +48,14 @@
 - Utilizar Input/Output como classes internas do CreateGenre
 
 
-# Aula 4 - InMemoryGenreRepository
-- Simplesmente copiar e atualizar os métodos do InMemoryCategoryRepository
-- O repositório do Django vai ter algumas peculiaridades
-
-
-## Aula 5 - Teste de integração: Criar Gênero
+## Aula 4 - Teste de integração: Criar Gênero
+- Simplesmente copiar e atualizar os métodos do InMemoryCategoryRepository para Genre
 - test_create_genre_with_associated_categories
 - test_create_genre_with_inexistent_categories_raise_an_error
 - Exercício: test_create_genre_without_categories
 
 
-## Aula 6 - Caso de uso: Listar Gêneros
+## Aula 5 - Caso de uso: Listar Gêneros
 - test_list_genres_with_associated_categories
   - 2 genres, 1 com categorias, outro sem
 - Não precisamos do CategoryRepository para a listagem (apenas para os testes de integração)
@@ -68,7 +64,7 @@
   - Adicionar caso de listagem para quando não tem gêneros cadastrados
 
 
-## Aula 7 - Caso de uso: Deletar Gênero
+## Aula 6 - Caso de uso: Deletar Gênero
 - Copiar DeleteCategory use case
 - Fazer os testes unitários
 - test_delete_genre_from_repository
@@ -77,7 +73,7 @@
 - Exercício: escrever testes de integração
 
 
-## Aula 8 - Desafio - Caso de uso: Atualizar Gênero
+## Desafio - Caso de uso: Atualizar Gênero
 Desafio: implementar o caso de uso de atualizar gênero
 
 Os atributos passados devem substituir **totalmente** os atributos da entidade (comportamento similar ao PUT e não ao PATCH).
@@ -89,3 +85,9 @@ Casos de teste (pode escolher fazer mais unitários e apenas o "happy path" de i
 - Atualizar um Genre com categorias que existem deve atualizar o Genre corretamente
   - Lembrando que vamos atualizar o Genre **totalmente**. Se ele tinha 3 categorias e passamos 2, ele deve ficar com 2 categorias.
   - Incluir atributos como "name" e "is_active" no teste
+
+
+## Código-fonte
+
+- [Pull Request](https://github.com/gcrsaldanha/codeflix-catalog-admin/pull/3)
+- [Branch](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-7-genre-domain)
