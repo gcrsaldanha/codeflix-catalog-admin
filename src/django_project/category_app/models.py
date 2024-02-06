@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Category(models.Model):
+    app_label = "category_app"
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     name = models.CharField(max_length=255)

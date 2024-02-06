@@ -1,7 +1,7 @@
 import pytest
-from django_project.category_app.repository import DjangoORMCategoryRepository
-from django_project.category_app.models import Category as CategoryORM
-from core.category.domain.category import Category
+from src.django_project.category_app.repository import DjangoORMCategoryRepository
+from src.django_project.category_app.models import Category as CategoryORM
+from src.core.category.domain.category import Category
 
 
 @pytest.mark.django_db
@@ -22,4 +22,3 @@ class TestSave:
         assert saved_category.name == category.name
         assert saved_category.description == category.description
         assert saved_category.is_active == category.is_active
-

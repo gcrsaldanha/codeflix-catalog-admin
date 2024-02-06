@@ -8,5 +8,5 @@ Administração de Catálogo – Codeflix - Python
 - [Módulo 4: casos de uso Category - pt 2](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-4-category-use-cases-part-2)
 - [Módulo 5: Implementando nossa API](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-5-django-api)
 - [Módulo 6: Implementando nossa API - pt 2](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-6-django-api-parte-2)
-]
 - [Módulo 7: Domain Genre](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-7-genre-domain)
+- [Módulo 8: API Genre](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-8-genre-api)
