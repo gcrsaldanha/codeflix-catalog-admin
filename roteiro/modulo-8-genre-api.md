@@ -12,8 +12,13 @@
 
 
 
-## Aula N: Configurando django shell plus
+## Aula 2: Criar GenreApp e Genre Model
 
+- Criar o app genre_app
+- Genre model com app_label (copiar Category)
+- Atualizar AppConfig
+- Gerar e executar migrações
+- Utilizar o shell_plus para criar gêneros
 ```bash
 pip install django-extensions
 pip install ipython
@@ -25,3 +30,10 @@ INSTALLED_APPS = (
     "django_extensions",
 )
 ```
+
+
+## Aula 3: Implementando Django GenreRepository
+- Falar sobre o `.categories`
+    - `.categories.add`
+    - `.categories.set`
+
