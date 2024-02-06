@@ -228,6 +228,17 @@ class TestUpdateAPI:
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         assert "Categories with provided IDs not found" in response.data["error"]
 
+    def test_when_genre_does_not_exist_then_return_404(self) -> None:
+        url = f"/api/genres/{str(uuid4())}/"
+        data = {
+            "name": "Romance",
+            "is_active": True,
+            "categories": [],
+        }
+        response = APIClient().put(url, data=data)
+
+        assert response.status_code == status.HTTP_404_NOT_FOUND
+
 
 @pytest.mark.django_db
 class TestDeleteAPI:
