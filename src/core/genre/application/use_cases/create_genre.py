@@ -33,7 +33,7 @@ class CreateGenre:
             genre = Genre(
                 name=input.name,
                 is_active=input.is_active,
-                categories=category_ids,
+                categories=input.categories,
             )
         except ValueError as err:
             raise InvalidGenre(err)
