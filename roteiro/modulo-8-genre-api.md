@@ -45,7 +45,7 @@ INSTALLED_APPS = (
 - Dois erros: `InvalidGenre` e `RelatedCategoriesNotFound`: HTTP_400
 
 
-## Aula 5: Delete API
+## Aula 6: Delete API
 - GenreNotFound: 404
 
 
