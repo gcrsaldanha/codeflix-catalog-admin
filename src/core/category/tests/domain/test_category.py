@@ -129,7 +129,7 @@ class TestEquality:
     def test_when_categories_have_same_id_they_are_equal(self):
         common_id = uuid.uuid4()
         category_1 = Category(name="Filme", id=common_id)
-        category_2 = Category(name="Filme", id=common_id)
+        category_2 = Category(name="Outro filme", id=common_id)
 
         assert category_1 == category_2
 

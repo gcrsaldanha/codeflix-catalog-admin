@@ -3,13 +3,14 @@ import uuid
 from typing import Set
 from uuid import UUID
 
+from src.core._shared.domain.entity import Entity
 
-@dataclass
-class Genre:
+
+@dataclass(eq=False)
+class Genre(Entity):
     name: str
     is_active: bool = True
     categories: Set[UUID] = field(default_factory=set)
-    id: UUID = field(default_factory=uuid.uuid4)
 
     def __post_init__(self):
         self.validate()
@@ -26,12 +27,6 @@ class Genre:
 
     def __repr__(self):
         return f"<Genre {self.name} ({self.id})>"
-
-    def __eq__(self, other):
-        if not isinstance(other, Genre):
-            return False
-
-        return self.id == other.id
 
     def add_category(self, category_id: UUID) -> None:
         self.categories.add(category_id)
