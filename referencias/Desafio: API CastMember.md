@@ -90,7 +90,7 @@ Response HTTP 204
 
 - Valida se a entidade com `pk` existe. Se não existir, retorna HTTP 404.
 
-```j
+```
 DELETE /api/cast_members/123e4567-e89b-12d3-a456-426614174000/
 Response HTTP 204
 ```
@@ -100,3 +100,29 @@ Response HTTP 204
 - Escreva testes unitários e de integração para a entidade e casos de uso.
 - Escreva testes de integração para as APIs.
 - Escreva pelo menos um teste end-to-end interagindo com múltiplos endpoints da API.
+- Utilize como base a [git branch do Módulo 8](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-8-genre-api)
+
+
+## Serializando um Enum
+
+Na camada de API, vamos precisar fazer a conversão do `"ACTOR"` para o `enum` que utilizarmos, por exemplo, `CastMemberType.ACTOR`.
+
+Para fazer isso, podemos ou fazer a conversão na `view`, mas o ideal seria utilizarmos os `serializers`, assim como fizemos com o `SetField`.
+
+Aqui está uma sugestão de implementação de um `Field` para serializar o `enum CastMember`:
+
+```python
+class CastMemberTypeField(serializers.ChoiceField):
+    def __init__(self, **kwargs):
+        # Utilizamos o "choices" do DRF, que permite um conjunto de opções limitado para um certo campo.
+        choices = [(type.name, type.value) for type in CastMemberType]
+        super().__init__(choices=choices, **kwargs)
+
+    def to_internal_value(self, data):
+        # Valor vindo da API como "str" é convertido para o StrEnum
+        return CastMemberType(super().to_internal_value(data))
+
+    def to_representation(self, value):
+        # O valor vindo do nosso domínio é convertido para uma string na API
+        return str(super().to_representation(value))
+```
