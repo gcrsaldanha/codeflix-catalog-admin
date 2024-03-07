@@ -47,15 +47,15 @@ class TestListAPI:
         expected_data = {
             "data": [
                 {
-                    "id": str(category_movie.id),
-                    "name": "Movie",
-                    "description": "Movie description",
-                    "is_active": True,
-                },
-                {
                     "id": str(category_documentary.id),
                     "name": "Documentary",
                     "description": "Documentary description",
+                    "is_active": True,
+                },
+                {
+                    "id": str(category_movie.id),
+                    "name": "Movie",
+                    "description": "Movie description",
                     "is_active": True,
                 },
             ]

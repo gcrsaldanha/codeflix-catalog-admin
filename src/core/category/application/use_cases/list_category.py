@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from uuid import UUID
+
 from src.core.category.domain.category_repository import CategoryRepository
+
 
 @dataclass
 class CategoryOutput:
@@ -12,7 +14,7 @@ class CategoryOutput:
 
 @dataclass
 class ListCategoryRequest:
-    pass
+    order_by: str = "name"  # Desafio: ordenação decrescente? ASC/DESC
 
 
 @dataclass
@@ -28,13 +30,15 @@ class ListCategory:
         categories = self.repository.list()
 
         return ListCategoryResponse(
-            data=[
-                CategoryOutput(
-                    id=category.id,
-                    name=category.name,
-                    description=category.description,
-                    is_active=category.is_active,
-                )
-                for category in categories
-            ]
+            data=sorted(
+                [
+                    CategoryOutput(
+                        id=category.id,
+                        name=category.name,
+                        description=category.description,
+                        is_active=category.is_active,
+                    ) for category in categories
+                ],
+                key=lambda category: getattr(category, request.order_by),
+            )
         )
