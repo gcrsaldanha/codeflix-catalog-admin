@@ -73,8 +73,10 @@ class TestUpdateCategory:
             category.update_category(name="a" * 256, description="Séries em geral")
 
     def test_cannot_update_category_with_empty_name(self):
+        category = Category(name="Filme", description="Filmes em geral")
+
         with pytest.raises(ValueError, match="name cannot be empty"):
-            Category(name="")
+            category.update_category(name="", description="Qualquer descrição")
 
 
 class TestActivate:
