@@ -11,3 +11,4 @@ Administração de Catálogo – Codeflix - Python
 - [Módulo 7: Domain Genre](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-7-genre-domain)
 - [Módulo 8: API Genre](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-8-genre-api)
 - [Módulo 9: API CastMember](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-9-cast-member)
+- [Módulo 10: Melhorando nossa API](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-10-refatoracao)

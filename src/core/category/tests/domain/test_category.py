@@ -48,6 +48,14 @@ class TestCategory:
         with pytest.raises(ValueError, match="name cannot be empty"):
             Category(name="")
 
+    def test_cannot_create_cateogry_with_description_longer_than_1024(self):
+        with pytest.raises(ValueError, match="description cannot be longer than 1024"):
+            Category(name="Filme", description="a" * 1025)
+
+    def test_notification_groups_errors(self):
+        with pytest.raises(ValueError, match="name cannot be empty,description cannot be longer than 1024"):
+            Category(name="", description="a" * 1025)
+
 
 class TestUpdateCategory:
     def test_update_category_with_name_and_description(self):
@@ -121,7 +129,7 @@ class TestEquality:
     def test_when_categories_have_same_id_they_are_equal(self):
         common_id = uuid.uuid4()
         category_1 = Category(name="Filme", id=common_id)
-        category_2 = Category(name="Filme", id=common_id)
+        category_2 = Category(name="Outro filme", id=common_id)
 
         assert category_1 == category_2
 
