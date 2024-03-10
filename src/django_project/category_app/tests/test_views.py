@@ -4,6 +4,7 @@ from django.urls import reverse
 import pytest
 from rest_framework import status
 from rest_framework.test import APIClient
+from src.config import DEFAULT_PAGINATION_SIZE
 from src.core.category.domain.category import Category
 
 from src.django_project.category_app.repository import DjangoORMCategoryRepository
@@ -58,7 +59,12 @@ class TestListAPI:
                     "description": "Movie description",
                     "is_active": True,
                 },
-            ]
+            ],
+            "meta": {
+                "current_page": 1,
+                "per_page": DEFAULT_PAGINATION_SIZE,
+                "total": 2,
+            },
         }
 
         assert response.status_code == status.HTTP_200_OK
