@@ -36,3 +36,6 @@ Como referência, utilize-os seguintes commits:
 Você deve ter percebido que a **listagem** é uma operação muito parecido entre os diferentes domínios.
 
 Tente abstrair e diminuir a duplicação de código para a listagem de entidades, tanto para a camada de aplicação quanto para a API (Views/Serializers).
+
+
+> Lembre-se de verificar que todos os testes estão passando – será necessário ajustar vários testes. Crie novos testes para as funcionalidades adicionadas.
