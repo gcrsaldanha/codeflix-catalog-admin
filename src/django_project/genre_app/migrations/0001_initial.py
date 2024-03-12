@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('categories', models.ManyToManyField(related_name='genres', to='category_app.category')),
             ],
             options={
-                'db_table': 'genres',
+                'db_table': 'genre',
             },
         ),
     ]
