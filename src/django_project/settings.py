@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'src.django_project.category_app',
     'src.django_project.genre_app',
-    'src.django_project.cast_member_app'
+    'src.django_project.cast_member_app',
+    'src.django_project.video_app',
 ]
 
 MIDDLEWARE = [
