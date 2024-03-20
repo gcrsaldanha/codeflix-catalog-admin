@@ -1,25 +1,24 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal
-from typing import Set
 from uuid import UUID
 
 from src.core._shared.domain.entity import Entity
-from src.core.video.domain.events import AudioVideoMediaUpdated
-from src.core.video.domain.value_objects import Rating, ImageMedia, AudioVideoMedia
+from src.core.video.domain.value_objects import Rating, ImageMedia, AudioVideoMedia, MediaStatus
 
 
-@dataclass(slots=True)
+@dataclass(slots=True, kw_only=True)
 class Video(Entity):
     title: str
     description: str
     launch_year: int
     duration: Decimal
-    published: bool
     rating: Rating
+    opened: bool
+    published: bool = field(default=False, init=False)
 
-    categories: Set[UUID]
-    genres: Set[UUID]
-    cast_members: Set[UUID]
+    categories: set[UUID]
+    genres: set[UUID]
+    cast_members: set[UUID]
 
     banner: ImageMedia | None = None
     thumbnail: ImageMedia | None = None
@@ -36,33 +35,36 @@ class Video(Entity):
         description: str,
         launch_year: int,
         duration: Decimal,
-        published: bool,
         rating: Rating,
-        categories: Set[UUID],
-        genres: Set[UUID],
-        cast_members: Set[UUID],
+        categories: set[UUID],
+        genres: set[UUID],
+        cast_members: set[UUID],
     ) -> None:
-        # TODO: Implementar métodos "de negócio": set_title, set_description, publish, rate, etc.
         self.title = title
         self.description = description
         self.launch_year = launch_year
         self.duration = duration
-        self.published = published
         self.rating = rating
         self.categories = categories
         self.genres = genres
         self.cast_members = cast_members
         self.validate()
 
+    def publish(self) -> None:
+        if not self.video:
+            self.notification.add_error("Video media is required to publish the video")
+        elif self.video.status != MediaStatus.COMPLETED:
+            self.notification.add_error("Video must be fully processed to be published")
+
+        self.published = True
+        self.validate()
+
     def validate(self):
-        # TODO: Usar pydantic para validar os tipos dos atributos
-        # TODO: Validações específicas: title, description
         if not self.title:
             self.notification.add_error("Title is required")
 
         if self.notification.has_errors:
             raise ValueError(self.notification.messages)
-
 
     def update_banner(self, banner: ImageMedia) -> None:
         self.banner = banner

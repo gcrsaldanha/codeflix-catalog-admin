@@ -19,8 +19,8 @@ class CreateVideoWithoutMedia:
         title: str
         description: str
         launch_year: int
+        opened: bool
         duration: Decimal
-        published: bool
         rating: Rating
         categories: Set[UUID]
         genres: Set[UUID]
@@ -56,8 +56,8 @@ class CreateVideoWithoutMedia:
                 title=request.title,
                 description=request.description,
                 launch_year=request.launch_year,
+                opened=request.opened,
                 duration=request.duration,
-                published=request.published,
                 rating=request.rating,
                 categories=request.categories,
                 genres=request.genres,

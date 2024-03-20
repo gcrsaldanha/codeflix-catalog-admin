@@ -25,16 +25,12 @@ class MediaStatus(Enum):
 
 @dataclass(frozen=True)
 class ImageMedia:
-    id: UUID | str
-    checksum: str
     name: str
-    location: str
+    raw_location: str
 
 
 @dataclass(frozen=True)
 class AudioVideoMedia:
-    id: UUID | str
-    checksum: str
     name: str
     raw_location: str
     encoded_location: str
