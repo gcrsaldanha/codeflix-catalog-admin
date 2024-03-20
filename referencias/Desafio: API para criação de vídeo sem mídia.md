@@ -45,6 +45,17 @@ Response:
   - Um para o caso de sucesso - video persistido.
   - Um para o caso de falha - qualquer erro (ou múltiplos erros).
 - Escrever testes unitários para o *usecase* `CreateVideoWithoutMedia` (caso ainda não o tenha feito)
-- Se preferir, utilize como referência o código que implementamos durante a aula: https://github.com/gcrsaldanha/codeflix-catalog-admin/pull/10
+- Se preferir, utilize como referência o Pull Request adicionando o que abordamos nesse módulo: https://github.com/gcrsaldanha/codeflix-catalog-admin/pull/9
 
 Boa sorte e qualquer dúvida, pode perguntar!
+
+
+## Correção: Uso de ValueObjects no projeto
+
+> O `ValueObject` **não** deve possuir um `id`. Ele é identificado unicamente por seus valores.
+
+Durante a implementaçãm em aula, adicionei um `id` aos nosso `ValueObjects`, comentando que esse `id` seria utilizado para a persistência no banco de dados.
+
+Porém, isso é um erro **clássico** de `DDD` onde nos guiamos pelo nosso **banco de dados** ao invés do **domínio**. Ou seja, eu inverti o fluxo de dependência e fiz meu *domain model* depender do meu *database model*. No pull request acima, isso está corrigido.
+
+Observe que ao contrário de outras entidades, cuja referência é feita por um `UUID`, os nossos `ValueObjects` são referenciaods *diretamente* pela nossa entidade (e.g.: `video.video = AudioVideoMedia(...)`). Isso é uma das características de um `ValueObject` e reforça a importância dele ser **imutável** - tanto por questões de design quanto de performance.

@@ -14,3 +14,6 @@ Administração de Catálogo – Codeflix - Python
     - [Desafio: Implementar Domain e API CastMember](https://github.com/gcrsaldanha/codeflix-catalog-admin/blob/main/referencias/Desafio%3A%20API%20CastMember.md)
 - [Módulo 10: Refatoração](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-10-refatoracao)
     - [Desafio: Paginação e Refatoração](https://github.com/gcrsaldanha/codeflix-catalog-admin/blob/main/referencias/Desafio%3A%20Pagina%C3%A7%C3%A3o%20e%20Refatora%C3%A7%C3%A3o.md)
+- [Módulo 11: Domain Video](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-11-domain-video-completo)
+  - [Pull Request](https://github.com/gcrsaldanha/codeflix-catalog-admin/pull/9)
+  - [Desafio: Implementar API Video](https://github.com/gcrsaldanha/codeflix-catalog-admin/blob/main/referencias/Desafio%3A%20API%20para%20cria%C3%A7%C3%A3o%20de%20v%C3%ADdeo%20sem%20m%C3%ADdia.md)
