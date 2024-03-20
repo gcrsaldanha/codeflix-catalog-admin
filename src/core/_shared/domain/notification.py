@@ -10,6 +10,9 @@ class Notification:
     def add_error(self, error: str) -> None:
         self._errors.append(error)
 
+    def add_errors(self, errors: list[str]) -> None:
+        self._errors.extend(errors)
+
     @property
     def messages(self) -> str:
         return ",".join(self._errors)
