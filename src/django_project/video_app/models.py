@@ -9,7 +9,9 @@ from src.core.video.domain.value_objects import MediaStatus, Rating
 
 
 class Video(models.Model):
-    RATING_CHOICES = [(rating.name, rating.name) for rating in Rating]
+    app_label = "video_app"
+
+    RATING_CHOICES = [(rating.name, rating.value) for rating in Rating]
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
 
     title = models.CharField(max_length=255)
@@ -38,22 +40,23 @@ class Video(models.Model):
         "AudioVideoMedia", null=True, blank=True, related_name="video_media", on_delete=models.SET_NULL
     )
 
+    class Meta:
+        db_table = "video"
+
 
 class ImageMedia(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
 
-    checksum = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     raw_location = models.CharField(max_length=255)
 
 
 class AudioVideoMedia(models.Model):
-    STATUS_CHOICES = [(status.name, status.name) for status in MediaStatus]
+    STATUS_CHOICES = [(status.name, status.value) for status in MediaStatus]
 
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
 
-    checksum = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     raw_location = models.CharField(max_length=255)
-    encoded_location = models.CharField(max_length=255)
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES)
+    encoded_location = models.CharField(max_length=255, blank=True)
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default=MediaStatus.PENDING.value)

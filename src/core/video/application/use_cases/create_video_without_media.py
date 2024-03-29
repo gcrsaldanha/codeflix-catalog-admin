@@ -74,13 +74,16 @@ class CreateVideoWithoutMedia:
         existing_category_ids = {category.id for category in self._category_repository.list()}
         if not category_ids.issubset(existing_category_ids):
             return ["Invalid categories"]
+        return []
 
     def validate_genres(self, genre_ids: Set[UUID]) -> list[str]:
         existing_genre_ids = {genre.id for genre in self._genre_repository.list()}
         if not genre_ids.issubset(existing_genre_ids):
             return ["Invalid genres"]
+        return []
 
     def validate_cast_members(self, cast_member_ids: Set[UUID]) -> list[str]:
         existing_cast_member_ids = {cast_member.id for cast_member in self._cast_member_repository.list()}
         if not cast_member_ids.issubset(existing_cast_member_ids):
             return ["Invalid cast members"]
+        return []
