@@ -17,3 +17,4 @@ Administração de Catálogo – Codeflix - Python
 - [Módulo 11: Domain Video](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-11-domain-video-completo)
   - [Pull Request](https://github.com/gcrsaldanha/codeflix-catalog-admin/pull/9)
   - [Desafio: Implementar API Video](https://github.com/gcrsaldanha/codeflix-catalog-admin/blob/main/referencias/Desafio%3A%20API%20para%20cria%C3%A7%C3%A3o%20de%20v%C3%ADdeo%20sem%20m%C3%ADdia.md)
+- [Módulo 12: Upload de Vídeo](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-12-upload-de-video)
