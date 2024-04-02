@@ -3,7 +3,8 @@ from decimal import Decimal
 from uuid import UUID
 
 from src.core._shared.domain.entity import Entity
-from src.core.video.domain.value_objects import Rating, ImageMedia, AudioVideoMedia, MediaStatus
+from src.core.video.domain.events.events import AudioVideoMediaUpdated
+from src.core.video.domain.value_objects import Rating, ImageMedia, AudioVideoMedia, MediaStatus, MediaType
 
 
 @dataclass(slots=True, kw_only=True)
@@ -14,7 +15,7 @@ class Video(Entity):
     duration: Decimal
     rating: Rating
     opened: bool
-    published: bool = field(default=False, init=False)
+    published: bool
 
     categories: set[UUID]
     genres: set[UUID]
@@ -81,7 +82,21 @@ class Video(Entity):
     def update_video_media(self, video: AudioVideoMedia) -> None:
         self.video = video
         self.validate()
+        self.dispatch_event(AudioVideoMediaUpdated(
+            aggregate_id=self.id,
+            file_path=video.raw_location,
+            media_type=MediaType.VIDEO,
+        ))
 
     def update_trailer(self, trailer: AudioVideoMedia) -> None:
         self.trailer = trailer
+        self.validate()
+
+    def process(self, status: MediaStatus, encoded_location: str = "") -> None:
+        if status == MediaStatus.COMPLETED:
+            self.video = self.video.complete(encoded_location)
+            self.publish()
+        else:
+            self.video = self.video.fail()
+
         self.validate()

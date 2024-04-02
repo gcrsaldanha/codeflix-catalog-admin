@@ -12,6 +12,7 @@ from src.django_project.video_app.repository import DjangoORMVideoRepository
 
 
 class VideoViewSet(viewsets.ViewSet):
+
     def list(self, request: Request) -> Response:
         raise NotImplementedError
 
