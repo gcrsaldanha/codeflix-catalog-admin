@@ -21,11 +21,13 @@ from rest_framework.routers import DefaultRouter
 from src.django_project.category_app.views import CategoryViewSet
 from src.django_project.genre_app.views import GenreViewSet
 from src.django_project.cast_member_app.views import CastMemberViewSet
+from src.django_project.video_app.views import VideoViewSet
 
 router = DefaultRouter()
 router.register(r"api/categories", CategoryViewSet, basename="category")
 router.register(r"api/genres", GenreViewSet, basename="genre")
 router.register(r"api/cast_members", CastMemberViewSet, basename="cast_member")
+router.register(r"api/videos", VideoViewSet, basename="video")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
