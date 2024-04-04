@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from uuid import UUID
 
+from src.core._shared.application.message_bus import MessageBus
 from src.core._shared.infrastructure.storage.abstract_storage import AbstractStorage
 from src.core.video.application.use_cases.exceptions import VideoNotFound
 from src.core.video.domain.value_objects import AudioVideoMedia, MediaStatus, MediaType
@@ -16,9 +17,10 @@ class UploadVideo:
         content: bytes
         content_type: str
 
-    def __init__(self, repository: VideoRepository, storage_service: AbstractStorage) -> None:
+    def __init__(self, repository: VideoRepository, storage_service: AbstractStorage, message_bus: MessageBus) -> None:
         self.repository = repository
         self.storage_service = storage_service
+        self.message_bus = message_bus
 
     def execute(self, input: Input) -> None:
         # TODO: trailer vs video
@@ -38,3 +40,4 @@ class UploadVideo:
         video.update_video_media(video_media)
 
         self.repository.update(video)
+        self.message_bus.dispatch(video.events)

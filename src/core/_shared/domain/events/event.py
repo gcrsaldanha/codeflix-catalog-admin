@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, asdict
+from typing import TypeVar
+
 
 
 @dataclass(frozen=True, kw_only=True)
-class DomainEvent(ABC):
+class Event(ABC):
     @property
     def type(self) -> str:
         return self.__class__.__name__
@@ -21,3 +23,6 @@ class DomainEvent(ABC):
     @abstractmethod
     def serialize(self) -> str:
         pass
+
+
+TEvent = TypeVar('TEvent', bound=Event)

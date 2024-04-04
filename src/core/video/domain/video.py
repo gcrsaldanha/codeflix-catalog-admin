@@ -82,7 +82,7 @@ class Video(Entity):
     def update_video_media(self, video: AudioVideoMedia) -> None:
         self.video = video
         self.validate()
-        self.dispatch_event(AudioVideoMediaUpdated(
+        self.events.append(AudioVideoMediaUpdated(
             aggregate_id=self.id,
             file_path=video.raw_location,
             media_type=MediaType.VIDEO,

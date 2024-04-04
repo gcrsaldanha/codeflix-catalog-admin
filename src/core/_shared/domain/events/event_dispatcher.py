@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 
-from src.core._shared.domain.events.domain_event import DomainEvent
+from src.core._shared.domain.events.event import Event
 
 
 class EventDispatcher(ABC):
     @abstractmethod
-    def dispatch(self, event: DomainEvent) -> None:
+    def dispatch(self, event: Event) -> None:
         pass
 
     @abstractmethod
-    def serialize(self, event: DomainEvent) -> bytes:
+    def serialize(self, event: Event) -> bytes:
         pass
