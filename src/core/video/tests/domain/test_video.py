@@ -41,6 +41,7 @@ class TestVideoEntity:
             duration=Decimal("120.5"),
             rating=Rating.AGE_12,
             opened=True,
+            published=False,
             categories={uuid4()},
             genres={uuid4()},
             cast_members={uuid4()},
