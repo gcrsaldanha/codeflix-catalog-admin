@@ -12,18 +12,19 @@ logger = logging.getLogger(__name__)
 
 
 class MessageBus:
-    EVENT_HANDLERS: dict[Type[TEvent], List[Handler[TEvent]]] = {
-        AudioVideoMediaUpdatedIntegrationEvent: [
-            PublishAudioVideoMediaUpdatedHandler(RabbitMQDispatcher.factory_with_queue("videos.new")),
-        ],
-        AudioVideoMediaUpdated: [
-            DummyHandler(),
-        ],
-    }
+    def __init__(self):
+        self.EVENT_HANDLERS: dict[Type[TEvent], List[Handler[TEvent]]] = {
+            AudioVideoMediaUpdatedIntegrationEvent: [
+                PublishAudioVideoMediaUpdatedHandler(RabbitMQDispatcher.factory_with_queue("videos.new")),
+            ],
+            AudioVideoMediaUpdated: [
+                DummyHandler(),
+            ],
+        }
 
     def dispatch(self, events: list[Event]) -> None:
         for event in events:
-            for handler in MessageBus.EVENT_HANDLERS[type(event)]:
+            for handler in self.EVENT_HANDLERS[type(event)]:
                 try:
                     handler.handle(event)
                 except Exception:
