@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant Client as Client
+    participant API as API (/videos/<video_id>)
+    participant UseCase as UploadVideo UseCase
+    participant VideoEntity as Video (Entity)
+    participant VideoRepo as VideoRepository
+    participant MsgBus as MessageBus
+    participant Handler as PublishAudioVideoMediaUpdatedHandler
+    participant RabbitMQ as RabbitMQDispatcher
+
+    Client->>API: PATCH /videos/<video_id> with uploaded file
+    API->>UseCase: call UploadVideo
+    UseCase->>VideoEntity: calls update_video_media
+    VideoEntity->>VideoEntity: adds AudioVideoMediaUpdated to video.events
+    UseCase->>VideoRepo: update video
+    UseCase->>MsgBus: dispatch(video.events)
+    MsgBus->>Handler: calls registered handler for AudioVideoMediaUpdated
+    Handler->>RabbitMQ: dispatches event

@@ -3,7 +3,6 @@ from dataclasses import dataclass, asdict
 from typing import TypeVar
 
 
-
 @dataclass(frozen=True, kw_only=True)
 class Event(ABC):
     @property

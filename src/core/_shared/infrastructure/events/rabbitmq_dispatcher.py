@@ -15,10 +15,14 @@ class RabbitMQDispatcher(EventDispatcher):
 
     def dispatch(self, event: Event) -> None:
         self.channel.basic_publish(exchange='', routing_key=self.queue, body=self.serialize(event))
-        print(f"Sent: {event}")
+        print(f"Sent: {event} to queue {self.queue}")
 
     def serialize(self, event: Event) -> bytes:
         return json.dumps(event.serialize()).encode()
 
     def close(self):
         self.connection.close()
+
+    @staticmethod
+    def factory_with_queue(queue: str):
+        return RabbitMQDispatcher(queue=queue)

@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant Encoder as Encoder
+    participant RabbitMQ as RabbitMQ (videos.converted queue)
+    participant Consumer as RabbitMQConsumer
+    participant Processor as ProcessAudioVideoMedia
+    participant VideoEntity as Video (Entity)
+    participant VideoRepo as VideoRepository
+
+    Encoder->>RabbitMQ: Publishes event in videos.converted queue
+    RabbitMQ->>Consumer: Event is consumed
+    Consumer->>Processor: Calls ProcessAudioVideoMedia with inputs
+    Processor->>VideoEntity: Calls video.process(status, encoded_location)
+
+    Note over VideoEntity: if status is "completed", then<br/> publish video, else, fail
+
+    VideoEntity->>VideoRepo: Update video

@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
 
+from src.core._shared.application.message_bus import MessageBus
 from src.core._shared.infrastructure.storage.local_storage import LocalStorage
 from src.core.video.application.use_cases.exceptions import VideoNotFound
 from src.core.video.application.use_cases.upload_video import UploadVideo
@@ -32,7 +33,8 @@ class VideoViewSet(viewsets.ViewSet):
 
         upload_video = UploadVideo(
             repository=DjangoORMVideoRepository(),
-            storage_service=LocalStorage()
+            storage_service=LocalStorage(),
+            message_bus=MessageBus(),
         )
         try:
             upload_video.execute(

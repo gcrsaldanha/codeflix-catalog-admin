@@ -4,6 +4,7 @@ from uuid import UUID
 
 from src.core._shared.application.message_bus import MessageBus
 from src.core._shared.infrastructure.storage.abstract_storage import AbstractStorage
+from src.core.video.application.events.integration_events import AudioVideoMediaUpdatedIntegrationEvent
 from src.core.video.application.use_cases.exceptions import VideoNotFound
 from src.core.video.domain.value_objects import AudioVideoMedia, MediaStatus, MediaType
 from src.core.video.domain.video_repository import VideoRepository
@@ -38,6 +39,13 @@ class UploadVideo:
             media_type=MediaType.VIDEO,
         )
         video.update_video_media(video_media)
-
         self.repository.update(video)
-        self.message_bus.dispatch(video.events)
+
+        # Dispatch integration event: ao fim de toda transaction (commit)
+        # Pesquisar por Unit of Work
+        self.message_bus.dispatch([
+            AudioVideoMediaUpdatedIntegrationEvent(
+                resource_id=f"{str(video.id)}.{MediaType.VIDEO}",
+                file_path=str(file_path),
+            ),
+        ])

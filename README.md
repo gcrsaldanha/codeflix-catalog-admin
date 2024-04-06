@@ -64,12 +64,15 @@ Option 1: service calls messagebus.handle(aggregate.events)
 - better than calling the encoder directly
 
 ```python
+import src.core._shared.application.abstract_message_bus
+
 HANDLERS = {
     events.BatchCreated: [handlers.add_batch],
     events.BatchQuantityChanged: [handlers.change_batch_quantity],
     events.AllocationRequired: [handlers.allocate],
     events.OutOfStock: [handlers.send_out_of_stock_notification],
 }
+
 
 class AbstractMessageBus:
     HANDLERS: Dict[Type[events.Event], List[Callable]]
@@ -86,7 +89,7 @@ class MessageBus(AbstractMessageBus):
     }
 
 
-class FakeMessageBus(messagebus.AbstractMessageBus):
+class FakeMessageBus(src.core._shared.application.abstract_message_bus.AbstractMessageBus):
     def __init__(self):
         self.events_published = []  # type: List[events.Event]
         self.HANDLERS = {

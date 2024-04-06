@@ -1,15 +1,12 @@
 import json
 from dataclasses import dataclass
-from uuid import UUID
 
 from src.core._shared.domain.events.event import Event
-from src.core.video.domain.value_objects import MediaType
 
 
 @dataclass(frozen=True)
-class AudioVideoMediaUpdated(Event):
-    aggregate_id: UUID
-    media_type: MediaType
+class AudioVideoMediaUpdatedIntegrationEvent(Event):
+    resource_id: str
     file_path: str
 
     def serialize(self) -> str:
