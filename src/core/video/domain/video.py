@@ -15,7 +15,7 @@ class Video(Entity):
     duration: Decimal
     rating: Rating
     opened: bool
-    published: bool
+    published: bool = False
 
     categories: set[UUID]
     genres: set[UUID]

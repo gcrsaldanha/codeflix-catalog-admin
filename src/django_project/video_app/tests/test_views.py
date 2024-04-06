@@ -1,11 +1,5 @@
-from unittest.mock import patch
-from uuid import uuid4
-
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
-from rest_framework import status
-from rest_framework.test import APIClient
 
 from src.core.video.domain.video import Video
 
@@ -16,5 +10,5 @@ def uploaded_file() -> SimpleUploadedFile:
 
 
 class TestPartialUpdate:
-    def test_when_video_exists_then_(self, video: Video) -> None:
-        url = f"/videos/{str(video.id)}/"
+    def test_when_video_exists_then_update_video_and_dispatch_integration_event(self) -> None:
+        pass

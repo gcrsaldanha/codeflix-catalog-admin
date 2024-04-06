@@ -2,6 +2,7 @@ from decimal import Decimal
 from pathlib import Path
 from unittest.mock import create_autospec
 
+from src.core._shared.application.abstract_message_bus import AbstractMessageBus
 from src.core._shared.infrastructure.storage.abstract_storage import AbstractStorage
 from src.core.video.application.use_cases.upload_video import UploadVideo
 from src.core.video.domain.value_objects import Rating, AudioVideoMedia, MediaStatus, MediaType
@@ -25,9 +26,11 @@ class TestUploadVideo:
 
         video_repository = InMemoryVideoRepository(videos=[video])
         mock_storage = create_autospec(AbstractStorage)
+        mock_message_bus = create_autospec(AbstractMessageBus)
         use_case = UploadVideo(
             repository=video_repository,
             storage_service=mock_storage,
+            message_bus=mock_message_bus,
         )
 
         use_case.execute(
