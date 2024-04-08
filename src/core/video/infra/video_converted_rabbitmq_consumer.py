@@ -4,7 +4,7 @@ from uuid import UUID
 
 import pika
 
-from src.core._shared.infrastructure.events.abstract_consumer import AbstractConsumer
+from src.core._shared.events.abstract_consumer import AbstractConsumer
 from src.core.video.application.use_cases.process_audio_video_media import ProcessAudioVideoMedia
 from src.core.video.domain.value_objects import MediaType, MediaStatus
 from src.django_project.video_app.repository import DjangoORMVideoRepository

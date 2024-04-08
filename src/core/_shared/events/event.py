@@ -19,9 +19,5 @@ class Event(ABC):
     def __repr__(self) -> str:
         return self.__str__()
 
-    @abstractmethod
-    def serialize(self) -> str:
-        pass
-
 
 TEvent = TypeVar('TEvent', bound=Event)

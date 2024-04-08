@@ -4,9 +4,9 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from uuid import UUID
 
-from src.core._shared.application.message_bus import MessageBus
-from src.core._shared.application.abstract_message_bus import AbstractMessageBus
-from src.core._shared.domain.events.event import Event
+from src.core._shared.events.message_bus import MessageBus
+from src.core._shared.events.abstract_message_bus import AbstractMessageBus
+from src.core._shared.events.event import Event
 from src.core._shared.domain.notification import Notification
 
 logger = logging.getLogger(__name__)
@@ -17,7 +17,7 @@ class Entity(ABC):
     id: UUID = field(default_factory=uuid.uuid4)
     notification: Notification = field(default_factory=Notification, init=False)
     events: list[Event] = field(default_factory=list, init=False)
-    message_bus: AbstractMessageBus = field(default_factory=MessageBus, init=False)
+    message_bus: AbstractMessageBus = field(default_factory=MessageBus, init=True)
 
     def __eq__(self, other: "Entity") -> bool:
         if not isinstance(other, self.__class__):
@@ -27,7 +27,7 @@ class Entity(ABC):
 
     def dispatch(self, event: Event) -> None:
         self.events.append(event)
-        self.message_bus.dispatch(self.events)
+        self.message_bus.handle(self.events)
 
     @abstractmethod
     def validate(self):

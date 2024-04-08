@@ -1,6 +1,5 @@
 from src.core._shared.application.handlers import Handler
-from src.core._shared.domain.events.event import Event
-from src.core._shared.domain.events.event_dispatcher import EventDispatcher
+from src.core._shared.events.event_dispatcher import EventDispatcher
 from src.core.video.application.events.integration_events import AudioVideoMediaUpdatedIntegrationEvent
 from src.core.video.domain.events import AudioVideoMediaUpdated
 

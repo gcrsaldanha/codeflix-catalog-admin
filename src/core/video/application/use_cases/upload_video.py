@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from uuid import UUID
 
-from src.core._shared.application.message_bus import MessageBus
+from src.core._shared.events.message_bus import MessageBus
 from src.core._shared.infrastructure.storage.abstract_storage import AbstractStorage
 from src.core.video.application.events.integration_events import AudioVideoMediaUpdatedIntegrationEvent
 from src.core.video.application.use_cases.exceptions import VideoNotFound
@@ -43,7 +43,7 @@ class UploadVideo:
 
         # Dispatch integration event: ao fim de toda transaction (commit)
         # Pesquisar por Unit of Work
-        self.message_bus.dispatch([
+        self.message_bus.handle([
             AudioVideoMediaUpdatedIntegrationEvent(
                 resource_id=f"{str(video.id)}.{MediaType.VIDEO}",
                 file_path=str(file_path),

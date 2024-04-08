@@ -1,6 +1,8 @@
 startconsumer:
-	docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
-	sleep 5  # wait for rabbitmq to start
+	@if [ -z "`docker ps -q -f name=rabbitmq`" ]; then \
+		docker run -d --hostname rabbitmq --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management; \
+		sleep 5; \
+	fi
 	python manage.py startconsumer
 
 stopconsumer:

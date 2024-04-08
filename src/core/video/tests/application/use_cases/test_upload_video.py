@@ -2,7 +2,8 @@ from decimal import Decimal
 from pathlib import Path
 from unittest.mock import create_autospec
 
-from src.core._shared.application.abstract_message_bus import AbstractMessageBus
+from src.core.video.application.events.integration_events import AudioVideoMediaUpdatedIntegrationEvent
+from src.core._shared.events.abstract_message_bus import AbstractMessageBus
 from src.core._shared.infrastructure.storage.abstract_storage import AbstractStorage
 from src.core.video.application.use_cases.upload_video import UploadVideo
 from src.core.video.domain.value_objects import Rating, AudioVideoMedia, MediaStatus, MediaType
@@ -55,3 +56,10 @@ class TestUploadVideo:
             media_type=MediaType.VIDEO,
         )
         assert video_repository.videos[0] == video
+
+        mock_message_bus.handle.assert_called_once_with([
+            AudioVideoMediaUpdatedIntegrationEvent(
+                resource_id=f"{str(video.id)}.{MediaType.VIDEO}",
+                file_path=f"videos/{video.id}/video.mp4",
+            )
+        ])

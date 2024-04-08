@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from src.core._shared.domain.events.event import Event
+from src.core._shared.events.event import Event
 from src.core._shared.infrastructure.events.rabbitmq_dispatcher import RabbitMQDispatcher
 
 
