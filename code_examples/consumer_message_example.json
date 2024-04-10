@@ -1,0 +1,8 @@
+{
+  "error": "",
+  "video": {
+    "resource_id": "c97093dd-9685-4555-974f-9b368559c1ad.VIDEO",
+    "encoded_video_folder": "/path/to/encoded/video"
+  },
+  "status": "COMPLETED"
+}
