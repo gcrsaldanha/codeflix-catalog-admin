@@ -30,3 +30,6 @@ python manage.py runserver
   - [Desafio: Implementar API Video](https://github.com/gcrsaldanha/codeflix-catalog-admin/blob/main/referencias/Desafio%3A%20API%20para%20cria%C3%A7%C3%A3o%20de%20v%C3%ADdeo%20sem%20m%C3%ADdia.md)
 - [Módulo 12: Upload de Vídeo](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-12-upload-de-video)
   - [Pull Request](https://github.com/gcrsaldanha/codeflix-catalog-admin/pull/11)
+- [Módulo 13: Eventos](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-13-domain-events)
+  - [Pull Request](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-13-domain-events)
+  - [Desafio: Teste End-to-End](./referencias/Desafio:%20Teste%20end-to-end%20para%20eventos.md)
