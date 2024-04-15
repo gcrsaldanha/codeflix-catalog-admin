@@ -1,3 +1,4 @@
+from unittest.mock import patch
 from uuid import UUID, uuid4
 from django.test import override_settings
 from django.urls import reverse
@@ -8,6 +9,7 @@ from src.config import DEFAULT_PAGINATION_SIZE
 from src.core.category.domain.category import Category
 
 from src.django_project.category_app.repository import DjangoORMCategoryRepository
+from src.django_project.category_app.views import CategoryViewSet
 
 
 @pytest.fixture
@@ -33,6 +35,8 @@ def category_repository() -> DjangoORMCategoryRepository:
 
 @pytest.mark.django_db
 class TestListAPI:
+
+    @patch.object(CategoryViewSet, "permission_classes", [])
     def test_list_categories(
         self,
         category_movie: Category,
@@ -43,7 +47,11 @@ class TestListAPI:
         category_repository.save(category_documentary)
 
         url = "/api/categories/"
-        response = APIClient().get(url)
+        # TODO: Desafio: Obter esse token dinamicamente
+        token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJxNm9HUjlpRDZhM3BwWEpxZmoxUW94U0pnZ0lZVmtOUmRnSGJvbHkzX0JrIn0.eyJleHAiOjE3MTMxNTE3MDgsImlhdCI6MTcxMzE1MTQwOCwianRpIjoiYzExYTY5MWEtYjBmNi00Y2ZmLWEzN2QtMTI0MWFmZTgyYWUyIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9jb2RlZmxpeCIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiIyZTFlMDU5ZS04YjJhLTQwOWMtYWYxOS0xY2U0ZmQzNDJiZGMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjb2RlZmxpeC1mcm9udGVuZCIsInNlc3Npb25fc3RhdGUiOiIzZWNlZDIxYi0xN2Q5LTQyMGItODljNS0zMjllMDlmOTY2MGYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIi8qIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIiwiZGVmYXVsdC1yb2xlcy1jb2RlZmxpeCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6IjNlY2VkMjFiLTE3ZDktNDIwYi04OWM1LTMyOWUwOWY5NjYwZiIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiYWRtaW4gYWRtaW4iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiIsImdpdmVuX25hbWUiOiJhZG1pbiIsImZhbWlseV9uYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSJ9.fSO0GFO2ONhbS2wObskymMNH8EblDidAV7KdX1M7E4d9e0Ot6EKti3npETXnwd8iJYIqoyswX2WAkfhJgW7Ryk5yuomoqmeX1sQEUd9SIzhmX5VUivSUe3TcXCG-RptVwuR9vSXiXlwlOHj-5wy7G5j4UUdNofG07oKTl5_WBvu7XxrBUuH0fGD-NfJV6UMJgeqmZSsNeYDqoY0DHR6jyh1BqSYoQkw1ReczF--YOzCPPwxxjkLGU_l99ibESsAfE_U3cnWVEdvtaOShyoTvJ8Qr19iJgIxvXMughMhs4X8BXYGdeI-MZR6xaBRyCgGLDgoq0ZuQHcS6PtiWx1IRKw"
+        response = APIClient(headers={
+            "Authorization": f"Bearer {token}",
+        }).get(url)
 
         expected_data = {
             "data": [

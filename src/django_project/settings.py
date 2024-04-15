@@ -133,3 +133,23 @@ REST_FRAMEWORK = {
 }
 
 CLOUD_STORAGE_BUCKET_NAME = "codeflix-bucket"
+
+
+# settings.py
+
+# Keycloak configuration
+KEYCLOAK_CONFIG = {
+    'KEYCLOAK_SERVER_URL': 'http://localhost:8080/auth/',
+    'KEYCLOAK_REALM': 'your-realm',
+    'KEYCLOAK_CLIENT_ID': 'your-client-id',
+    'KEYCLOAK_CLIENT_SECRET': 'your-client-secret',
+    'KEYCLOAK_RPT_CONFIG': {
+        'verify_signature': True,
+        'decode_token': True,
+        'audience': 'your-client-id',
+    },
+    'KEYCLOAK_AUTHORIZE_CONFIG': {
+        'response_type': 'code',
+        'scope': 'openid',
+    },
+}

@@ -38,9 +38,13 @@ from src.django_project.category_app.serializers import (
     RetrieveCategoryResponseSerializer,
     UpdateCategoryRequestSerializer,
 )
+from src.django_project.permissions import IsAuthenticated, IsAdmin
 
 
 class CategoryViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated | IsAdmin]
+    # permission_classes = [IsAuthenticated]
+
     def list(self, request: Request) -> Response:
         order_by = request.query_params.get("order_by", "name")
         use_case = ListCategory(repository=DjangoORMCategoryRepository())
