@@ -34,9 +34,8 @@ def category_repository() -> DjangoORMCategoryRepository:
 
 
 @pytest.mark.django_db
+@patch.object(CategoryViewSet, "permission_classes", [])
 class TestListAPI:
-
-    @patch.object(CategoryViewSet, "permission_classes", [])
     def test_list_categories(
         self,
         category_movie: Category,
@@ -79,6 +78,7 @@ class TestListAPI:
         assert response.data == expected_data
 
 
+@patch.object(CategoryViewSet, "permission_classes", [])
 @pytest.mark.django_db
 class TestRetrieveAPI:
     def test_when_category_with_id_exists_then_return_category(
@@ -117,6 +117,7 @@ class TestRetrieveAPI:
         assert response.data == {"id": ["Must be a valid UUID."]}
 
 
+@patch.object(CategoryViewSet, "permission_classes", [])
 @pytest.mark.django_db
 class TestCreateAPI:
     def test_when_request_data_is_valid_then_create_category(
@@ -153,6 +154,7 @@ class TestCreateAPI:
         assert response.data == {"name": ["This field may not be blank."]}
 
 
+@patch.object(CategoryViewSet, "permission_classes", [])
 @pytest.mark.django_db
 class TestUpdateAPI:
     def test_when_request_data_is_valid_then_update_category(
@@ -206,6 +208,7 @@ class TestUpdateAPI:
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
 
+@patch.object(CategoryViewSet, "permission_classes", [])
 @pytest.mark.django_db
 class TestDeleteAPI:
     def test_when_category_pk_is_invalid_then_return_400(self) -> None:
@@ -236,6 +239,7 @@ class TestDeleteAPI:
         assert category_repository.get_by_id(category_movie.id) is None
 
 
+@patch.object(CategoryViewSet, "permission_classes", [])
 @pytest.mark.django_db
 class TestPartialUpdateAPI:
     @pytest.mark.parametrize(
