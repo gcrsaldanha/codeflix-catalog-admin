@@ -33,3 +33,6 @@ python manage.py runserver
 - [Módulo 13: Eventos](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-13-domain-events)
   - [Pull Request](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-13-domain-events)
   - [Desafio: Teste End-to-End](./referencias/Desafio:%20Teste%20end-to-end%20para%20eventos.md)
+- [Módulo 14: Autenticação](https://github.com/gcrsaldanha/codeflix-catalog-admin/tree/modulo-14-keycloak)
+  - [Pull Request](https://github.com/gcrsaldanha/codeflix-catalog-admin/pull/14)
+  - [Desafio: Gerando token JWT](./referencias/Desafio:%20Gerando%20token%20JWT.md)
