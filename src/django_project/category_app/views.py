@@ -42,8 +42,7 @@ from src.django_project.permissions import IsAuthenticated, IsAdmin
 
 
 class CategoryViewSet(viewsets.ViewSet):
-    permission_classes = [IsAuthenticated | IsAdmin]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated & IsAdmin]
 
     def list(self, request: Request) -> Response:
         order_by = request.query_params.get("order_by", "name")
