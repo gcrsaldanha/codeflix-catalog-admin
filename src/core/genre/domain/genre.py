@@ -39,6 +39,10 @@ class Genre:
     def remove_category(self, category_id: UUID) -> None:
         self.categories.remove(category_id)
 
+    def update_categories(self, categories: set[UUID]) -> None:
+        self.categories.clear()
+        self.categories.update(categories)
+
     def change_name(self, name):
         self.name = name
         self.validate()
